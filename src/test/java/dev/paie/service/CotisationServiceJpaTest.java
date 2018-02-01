@@ -27,9 +27,8 @@ public class CotisationServiceJpaTest {
 	public void test_sauvegarder_lister_mettre_a_jour() {
 	// TODO sauvegarder une nouvelle cotisation
 		Cotisation c = new Cotisation();
-		//c.setId(1);
 		c.setCode("ABC");
-		c.setLibelle("cotisation 1");
+		c.setLibelle("cotisation1");
 		c.setTauxPatronal(new BigDecimal(12));
 		c.setTauxSalarial(new BigDecimal(88));
 		
@@ -40,18 +39,16 @@ public class CotisationServiceJpaTest {
 		Stream.of("ABC").forEach(
 				code -> assertThat(cotisations.stream().filter(co -> co.getCode().equals(code)).findAny().isPresent())
 						.isTrue());
-//
-//		g2.setCode("XXX");
-//		gradeService.mettreAJour(g2);
-//		listeGrade.clear();
-//		listeGrade.addAll(gradeService.lister());
-//		
-//		Stream.of("ABC","AAA","XXX").forEach(
-//				code -> assertThat(listeGrade.stream().filter(c -> c.getCode().equals(code)).findAny().isPresent())
-//						.isTrue());
-	// TODO vérifier qu'il est possible de récupérer la nouvelle cotisation via laméthode lister
-	// TODO modifier une cotisation
-	// TODO vérifier que les modifications sont bien prises en compte via la méthode lister
+
+		c.setId(1);
+		c.setCode("XXX");
+		cotisationService.mettreAJour(c);
+		cotisations.clear();
+		cotisations.addAll(cotisationService.lister());
+		
+		Stream.of("XXX").forEach(
+				code -> assertThat(cotisations.stream().filter(co -> co.getCode().equals(code)).findAny().isPresent())
+						.isTrue());
 	}
 
 }

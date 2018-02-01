@@ -14,30 +14,30 @@ import dev.paie.entite.Cotisation;
 
 @Service
 @Transactional
-public class CotisationServiceJpa implements CotisationService{
+public class CotisationServiceJpa implements CotisationService {
 
-	@PersistenceContext private EntityManager em;
+	@PersistenceContext
+	private EntityManager em;
 
-	@Override	
+	@Override
 	public void sauvegarder(Cotisation nouvelleCotisation) {
-		em.persist(nouvelleCotisation);	
+		em.persist(nouvelleCotisation);
 	}
 
 	@Override
 	public void mettreAJour(Cotisation cotisation) {
-		em.find(Cotisation.class, cotisation.getId());
-		cotisation.setCode(cotisation.getCode());
-		cotisation.setLibelle(cotisation.getLibelle());
-		cotisation.setTauxPatronal(cotisation.getTauxPatronal());
-		cotisation.setTauxSalarial(cotisation.getTauxSalarial());
-		}
-	
+		Cotisation c = em.find(Cotisation.class, cotisation.getId());
+		c.setCode(cotisation.getCode());
+		c.setLibelle(cotisation.getLibelle());
+		c.setTauxPatronal(cotisation.getTauxPatronal());
+		c.setTauxSalarial(cotisation.getTauxSalarial());
+	}
 
 	@Override
 	public List<Cotisation> lister() {
 		List<Cotisation> cotisations = new ArrayList<Cotisation>();
 		TypedQuery<Cotisation> query = em.createQuery("SELECT c FROM Cotisation c", Cotisation.class);
-		for(Cotisation c : query.getResultList()){
+		for (Cotisation c : query.getResultList()) {
 			cotisations.add(c);
 		}
 		return cotisations;
