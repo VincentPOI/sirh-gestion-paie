@@ -48,15 +48,15 @@ public class GradeServiceJdbcTemplateTest {
 //		gradeService.sauvegarder(g1);
 //
 		Grade g2 = new Grade();
-		g2.setId(2);
-		g2.setCode("AAA");
+		g2.setId(3);
+		g2.setCode("BBB");
 		g2.setNbHeuresBase(new BigDecimal(32));
 		g2.setTauxBase(new BigDecimal(99));
-//		gradeService.sauvegarder(g2);
+		gradeService.sauvegarder(g2);
 		
 		List<Grade> listeGrade = gradeService.lister();
 
-		Stream.of("ABC","AAA").forEach(
+		Stream.of("ABC","AAA","BBB").forEach(
 				code -> assertThat(listeGrade.stream().filter(c -> c.getCode().equals(code)).findAny().isPresent())
 						.isTrue());
 
@@ -65,7 +65,7 @@ public class GradeServiceJdbcTemplateTest {
 		listeGrade.clear();
 		listeGrade.addAll(gradeService.lister());
 		
-		Stream.of("ABC","XXX").forEach(
+		Stream.of("ABC","AAA","XXX").forEach(
 				code -> assertThat(listeGrade.stream().filter(c -> c.getCode().equals(code)).findAny().isPresent())
 						.isTrue());		
 	}
