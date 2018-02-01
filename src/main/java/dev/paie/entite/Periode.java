@@ -2,12 +2,20 @@ package dev.paie.entite;
 
 import java.time.LocalDate;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 
 public class Periode {
 	
-	private Integer id;
-	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private Integer id;	
+	@Column(name="dateDebut")
 	private LocalDate dateDebut;
+	@Column(name="dateFin")
 	private LocalDate dateFin;
 	
 	public LocalDate getDateDebut() {

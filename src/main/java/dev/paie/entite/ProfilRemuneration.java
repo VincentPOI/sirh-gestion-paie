@@ -2,15 +2,24 @@ package dev.paie.entite;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
 
 public class ProfilRemuneration {
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+	@Column(name="code")
 	private String code;
 
 	private List<Cotisation> cotisationsNonImposables;
 	
 	private List<Cotisation> cotisationsImposables;
+	
 	
 	private List<Avantage> avantages;
 

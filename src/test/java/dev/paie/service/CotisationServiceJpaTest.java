@@ -16,7 +16,7 @@ import dev.paie.config.ServicesConfig;
 import dev.paie.entite.Cotisation;
 
 //Sélection des classes de configuration Spring à utiliser lors du test
-@ContextConfiguration(classes = {  ServicesConfig.class})
+@ContextConfiguration(classes = { ServicesConfig.class})
 //Configuration JUnit pour que Spring prenne la main sur le cycle de vie du
 //test
 @RunWith(SpringRunner.class)
