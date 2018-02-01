@@ -66,7 +66,7 @@ public class GradeServiceJdbcTemplateTest {
 		listeGrade.addAll(gradeService.lister());
 		
 		Stream.of("ABC","XXX").forEach(
-				code -> assertThat(listeGrade2.stream().filter(c -> c.getCode().equals(code)).findAny().isPresent())
+				code -> assertThat(listeGrade.stream().filter(c -> c.getCode().equals(code)).findAny().isPresent())
 						.isTrue());		
 	}
 
