@@ -35,7 +35,7 @@ public class CotisationServiceJpa implements CotisationService {
 
 	@Override
 	public List<Cotisation> lister() {
-		List<Cotisation> cotisations = new ArrayList<Cotisation>();
+		List<Cotisation> cotisations = new ArrayList<>();
 		TypedQuery<Cotisation> query = em.createQuery("SELECT c FROM Cotisation c", Cotisation.class);
 		for (Cotisation c : query.getResultList()) {
 			cotisations.add(c);
