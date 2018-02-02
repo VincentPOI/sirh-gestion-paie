@@ -59,6 +59,7 @@ public class CalculerRemunerationServiceSimple implements CalculerRemunerationSe
 	}
 	
 	private BigDecimal calculCotisationPatronale(List<Cotisation> cotisations, BigDecimal salaireBrut){
+
 		BigDecimal somme= cotisations.stream()
                 .filter(c -> c.getTauxPatronal()!=null)
                 .map(c -> c.getTauxPatronal().multiply(salaireBrut))

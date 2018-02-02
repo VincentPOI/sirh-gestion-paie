@@ -13,7 +13,7 @@ public class DataSourceMySQLConfig {
 	public DataSource datasource() {
 	return new EmbeddedDatabaseBuilder()
 	.setType(EmbeddedDatabaseType.H2)
-	.addScript("grade.sql")
+//	.addScript("grade.sql")
 	.build();
 	}
 

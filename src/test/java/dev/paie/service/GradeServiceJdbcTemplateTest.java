@@ -28,20 +28,30 @@ public class GradeServiceJdbcTemplateTest {
 	@Autowired
 	private GradeService gradeService;
 	
-	@Autowired
-	private DataSource ds;
 	
 
 	@Test
 	public void test_sauvegarder_lister_mettre_a_jour() {
 
-
+		Grade g1 = new Grade();
+		g1.setCode("ABC");
+		g1.setNbHeuresBase(new BigDecimal(24));
+		g1.setTauxBase(new BigDecimal(6.67));
+		gradeService.sauvegarder(g1);
+		
 		Grade g2 = new Grade();
-		g2.setId(3);
-		g2.setCode("BBB");
-		g2.setNbHeuresBase(new BigDecimal(32));
-		g2.setTauxBase(new BigDecimal(99));
+		g2.setCode("AAA");
+		g2.setNbHeuresBase(new BigDecimal(24));
+		g2.setTauxBase(new BigDecimal(6.67));
 		gradeService.sauvegarder(g2);
+		
+
+		Grade g3 = new Grade();
+		
+		g3.setCode("BBB");
+		g3.setNbHeuresBase(new BigDecimal(32));
+		g3.setTauxBase(new BigDecimal(99));
+		gradeService.sauvegarder(g3);
 		
 		List<Grade> listeGrade = gradeService.lister();
 
@@ -49,8 +59,9 @@ public class GradeServiceJdbcTemplateTest {
 				code -> assertThat(listeGrade.stream().filter(c -> c.getCode().equals(code)).findAny().isPresent())
 						.isTrue());
 
-		g2.setCode("XXX");
-		gradeService.mettreAJour(g2);
+		g3.setCode("XXX");
+		g3.setId(3);
+		gradeService.mettreAJour(g3);
 		listeGrade.clear();
 		listeGrade.addAll(gradeService.lister());
 		

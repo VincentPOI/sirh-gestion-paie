@@ -16,7 +16,7 @@ import dev.paie.util.PaieUtils;
 @Service
 public class GradeServiceJdbcTemplate implements GradeService {
 
-	private JdbcTemplate jdbcTemplate;
+	private JdbcTemplate jdbcTemplate; 
 	
 	@Autowired 
 	PaieUtils paieUtils;
