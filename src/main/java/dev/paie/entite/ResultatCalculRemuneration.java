@@ -1,5 +1,8 @@
 package dev.paie.entite;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class ResultatCalculRemuneration {
 
 	private String salaireDeBase;

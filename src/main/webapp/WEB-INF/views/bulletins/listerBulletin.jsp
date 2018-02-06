@@ -88,9 +88,9 @@
 									<td>jj/MM/yy HH:SS</td>
 									<td>${bulletin.periode.dateDebut} - ${bulletin.periode.dateFin}</td>
 									<td>${bulletin.remunerationEmploye.matricule}</td>
-									<td>${salairesBruts[status.index]}</td>
-									<td>${netImposables[status.index]}</td>
-									<td>${netAPayers[status.index]}</td>
+									<td>${calculsBulletins[bulletin].salaireBrut}</td>
+									<td>${calculsBulletins[bulletin].netImposable}</td>
+									<td>${calculsBulletins[bulletin].netAPayer}</td>
 									<td><a href="<c:url value ='/mvc/bulletins/visualiser?id=${bulletin.id}'/>">Visualiser</a></td>
 								</tr>
 							</c:forEach>

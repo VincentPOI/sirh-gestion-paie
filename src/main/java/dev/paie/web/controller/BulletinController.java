@@ -1,7 +1,9 @@
 package dev.paie.web.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import dev.paie.entite.BulletinSalaire;
+import dev.paie.entite.ResultatCalculRemuneration;
 import dev.paie.repository.BulletinSalaireRepository;
 import dev.paie.repository.EntrepriseRepository;
 import dev.paie.repository.GradeRepository;
@@ -39,7 +42,8 @@ public class BulletinController {
 	@Autowired
 	BulletinSalaireRepository bsr;
 	@Autowired
-	CalculerRemunerationServiceSimple calculs;
+	CalculerRemunerationServiceSimple calculer;
+	ResultatCalculRemuneration calculs = new ResultatCalculRemuneration();
 	@Autowired 
 	PaieUtils paieUtils;
 	
@@ -63,23 +67,18 @@ public class BulletinController {
 	@RequestMapping(method = RequestMethod.GET, path = "/lister")
 	@Transactional
 	public ModelAndView listerBulletin() {
-		
+				
+		calculs = new ResultatCalculRemuneration();
 		ModelAndView mv = new ModelAndView();
+		Map<BulletinSalaire, ResultatCalculRemuneration> calculsBulletins = new HashMap<>();
 		List<BulletinSalaire> bulletins = bsr.findAll();
-		List<String> salairesBruts = new ArrayList<>();
-		List<String> netImposables = new ArrayList<>();
-		List<String> netAPayers = new ArrayList<>();
 		for(BulletinSalaire b : bulletins){
-			calculs.calculer(b);
-			salairesBruts.add(paieUtils.formaterBigDecimal(calculs.getSalaireBrut()));
-			netImposables.add(paieUtils.formaterBigDecimal(calculs.getNetImposable()));
-			netAPayers.add(paieUtils.formaterBigDecimal(calculs.getNetAPayer()));
+			calculs = calculer.calculer(b);
+			calculsBulletins.put(b, calculs);
 		}	
 		
 		mv.addObject("bulletins",bulletins);	
-		mv.addObject("salairesBruts",salairesBruts);
-		mv.addObject("netImposables",netImposables);
-		mv.addObject("netAPayers",netAPayers);
+		mv.addObject("calculsBulletins",calculsBulletins);
 		mv.setViewName("bulletins/listerBulletin");
 		return mv;
 	}
@@ -87,22 +86,12 @@ public class BulletinController {
 	@RequestMapping(method = RequestMethod.GET, path = "/visualiser")
 	@Transactional
 	public ModelAndView visualiserBulletin(@RequestParam("id") int i) {	
-		
-		
-		List<String> salairesBases = new ArrayList<>();
-		List<String> salairesBruts = new ArrayList<>();
-		List<String> netImposables = new ArrayList<>();
-		List<String> netAPayers = new ArrayList<>();
-		for(BulletinSalaire b : bsr.findAll()){
-			calculs.calculer(b);
-			salairesBruts.add(paieUtils.formaterBigDecimal(calculs.getSalaireBrut()));
-			netImposables.add(paieUtils.formaterBigDecimal(calculs.getNetImposable()));
-			netAPayers.add(paieUtils.formaterBigDecimal(calculs.getNetAPayer()));
-		}	
-		
-		
+				
+		BulletinSalaire bull = bsr.findOne(i);
+		calculs = calculer.calculer(bull);
 		ModelAndView mv = new ModelAndView();
-		mv.addObject("bulletin",bsr.findOne(i));
+		mv.addObject("bulletin",bull);
+		mv.addObject("calculs",calculs);
 		mv.setViewName("bulletins/visualiser");
 		return mv;
 	}

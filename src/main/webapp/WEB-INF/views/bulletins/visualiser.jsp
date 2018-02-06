@@ -32,22 +32,26 @@
 
 </head>
 <body class="ui container-fluid">
-	<%  %>
+	<%
+		
+	%>
 	<h1 class="ui header" align="center">Bulletin de salaire</h1>
 	<br />
 	<p align="right">
-		<strong>Periode</strong> <br /> Du ${bulletin.periode.dateDebut} au ${bulletin.periode.dateFin}
+		<strong>Periode</strong> <br /> Du ${bulletin.periode.dateDebut} au
+		${bulletin.periode.dateFin}
 	</p>
 	<div class="d-flex flex-row flex-wrap">
 		<div class="p-2">
 			<p>
-				<strong>Entreprise</strong> <br /> ${bulletin.remunerationEmploye.entreprise.denomination} <br /> SIRET : ${bulletin.remunerationEmploye.entreprise.siret}
-
-			
+				<strong>Entreprise</strong> <br />
+				${bulletin.remunerationEmploye.entreprise.denomination} <br />
+				SIRET : ${bulletin.remunerationEmploye.entreprise.siret}
 		</div>
 		<div class="p-2">
 			<p>
-				<strong>Matricule</strong> : ${bulletin.remunerationEmploye.matricule}
+				<strong>Matricule</strong> :
+				${bulletin.remunerationEmploye.matricule}
 		</div>
 		<br />
 	</div>
@@ -66,9 +70,9 @@
 		<tbody>
 			<tr>
 				<td>Salaire de base</td>
-				<td>NBHEURESBASE</td>
-				<td>TAUXSALARIAL</td>
-				<td>SALAIREBASE</td>
+				<td>${bulletin.remunerationEmploye.grade.nbHeuresBase}</td>
+				<td>${calculs.totalRetenueSalarial}</td>
+				<td>${calculs.salaireDeBase}</td>
 				<td></td>
 				<td></td>
 			</tr>
@@ -76,7 +80,7 @@
 				<td>Prime Except.</td>
 				<td></td>
 				<td></td>
-				<td>PRIMEEXCEPTIONNELLE</td>
+				<td>${bulletin.primeExceptionnelle}</td>
 				<td></td>
 				<td></td>
 			</tr>
@@ -92,7 +96,7 @@
 				<td>Salaire Brut</td>
 				<td></td>
 				<td></td>
-				<td>SALAIREBRUT</td>
+				<td>${calculs.salaireBrut}</td>
 				<td></td>
 				<td></td>
 			</tr>
@@ -112,15 +116,31 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				FOR EACH COTISATION
-				<td>CODE LIBELLE</td>
-				<td>NBHEURESBASE</td>
-				<td>TAUXSALARIAL</td>
-				<td>MONTANT</td>
-				<td>TAUX PATRONAL</td>
-				<td>COTISATIONS PATRONALES</td>
-			</tr>
+
+			<c:forEach var="cotisation"
+				items="${bulletin.remunerationEmploye.profilRemuneration.cotisationsNonImposables}">
+				<tr>
+					<td>${cotisation.code}/ ${cotisation.libelle}</td>
+					<td>${calculs.salaireBrut}</td>
+					<td>${cotisation.tauxSalarial}</td>
+					<td>${calculs.salaireBrut * cotisation.tauxSalarial}</td>
+					<td>${cotisation.tauxPatronal}</td>
+					<td>${calculs.salaireBrut*cotisation.tauxPatronal}</td>
+				</tr>
+			</c:forEach>
+			<c:forEach var="cotisation"
+				items="${bulletin.remunerationEmploye.profilRemuneration.cotisationsImposables}">
+				<tr>
+					<td>${cotisation.code}/ ${cotisation.libelle}</td>
+					<td>${calculs.salaireBrut}</td>
+					<td>${cotisation.tauxSalarial}</td>
+					<td>${calculs.salaireBrut * cotisation.tauxSalarial}</td>
+					<td>${cotisation.tauxPatronal}</td>
+					<td>${calculs.salaireBrut*cotisation.tauxPatronal}</td>
+				</tr>
+			</c:forEach>
+
+
 			<tr>
 				<td></td>
 				<td></td>
@@ -133,14 +153,14 @@
 				<td>Total Retenue</td>
 				<td></td>
 				<td></td>
-				<td>TOTAL RETENUE SALARIALE</td>
+				<td>${calculs.totalRetenueSalarial}</td>
 				<td></td>
 				<td></td>
 			</tr>
 		</tbody>
 	</table>
 	<br />
-	<strong>NET Imposable : </strong> NETIMPOSABLE
+	<strong>NET Imposable : </strong> ${calculs.netImposable}
 	<table class="table table-striped table-bordered l-10 r-10">
 		<thead>
 			<tr>
@@ -155,9 +175,9 @@
 		<tbody>
 			<tr>
 				<td>Salaire de base</td>
-				<td>NBHEURESBASE</td>
-				<td>TAUXSALARIAL</td>
-				<td>SALAIREBASE</td>
+				<td>${bulletin.remunerationEmploye.grade.nbHeuresBase}</td>
+				<td>${calculs.totalRetenueSalarial}</td>
+				<td>${calculs.salaireDeBase}</td>
 				<td></td>
 				<td></td>
 			</tr>
@@ -166,7 +186,7 @@
 	</table>
 	<br />
 	<p align="right">
-		<strong>NET A PAYER :</strong> NETAPAYER
+		<strong>NET A PAYER :</strong> ${calculs.netAPayer}
 	</p>
 </body>
 </html>
