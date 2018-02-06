@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <html>
 
@@ -37,8 +37,8 @@
 			<div class="row">
 				<div class="col-md-12">
 					<ul class="nav nav-tabs">
-						<li class="nav-item"><a class="nav-link" href="<c:url value ='/mvc/employes/lister'/>">Employés</a>
-						</li>
+						<li class="nav-item"><a class="nav-link"
+							href="<c:url value ='/mvc/employes/lister'/>">Employés</a></li>
 						<li class="nav-item"><a href="<c:url value ='/mvc/bulletins/lister'/>" class="nav-link">Bulletins</a>
 						</li>
 					</ul>
@@ -50,7 +50,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<h1 class="display-1 text-center">Ajouter un employé</h1>
+					<h1 class="display-1 text-center">Créer un bulletin de salaire</h1>
 				</div>
 			</div>
 		</div>
@@ -59,33 +59,31 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<form:form method="POST" modelAttribute="newEmploye" >
+					<form:form method="POST" modelAttribute="newBulletin">
 						<div class="form-group">
-							<form:label path="matricule">Matricule</form:label>
-							<form:input path="matricule" />
-						</div>
-						<div class="form-group">
-							<form:label path="entreprise.id">Entreprise</form:label>
-							<form:select path="entreprise.id">
-								<form:options items="${entreprises}" itemLabel="denomination" itemValue="id"/>
+							<form:label path="periode.id">periode</form:label>
+							<form:select path="periode.id">
+								<c:forEach var="periode" items="${periodes}">
+									<form:option value="${periode.id}">
+										<c:out value="${periode.dateDebut} - ${periode.dateFin}" />
+									</form:option>
+								</c:forEach>
 							</form:select>
 						</div>
 						<div class="form-group">
-							<form:label path="profilRemuneration.id">Profil</form:label>
-							<form:select path="profilRemuneration.id">
-								<form:options items="${profilsRemuneration}" itemLabel="code" itemValue="id"/>
+							<form:label path="remunerationEmploye.id">Matricule</form:label>
+							<form:select path="remunerationEmploye.id">
+								<form:options items="${remunerationsEmployes}"
+									itemLabel="matricule" itemValue="id" />
 							</form:select>
 							<div class="form-group">
-								<form:label path="grade.id">Grade</form:label>
-								<form:select path="grade.id">
-									<form:options items="${grades}" itemLabel="code" itemValue="id"/>
-								</form:select>
+								<form:label path="primeExceptionnelle">Prime exceptionelle</form:label>
+								<form:input path="primeExceptionnelle" />
 							</div>
-							<input type="submit" value="Ajouter">
+							<input type="submit" value="Creer">
+						</div>
 					</form:form>
 				</div>
 			</div>
 		</div>
-	</div>
 </body>
-</html>

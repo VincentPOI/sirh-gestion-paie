@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="s" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <html>
 
@@ -50,7 +50,19 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<h1 class="display-1 text-center">Ajouter un employé</h1>
+					<h1 class="display-1 text-center">Liste des employés</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="py-5">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6"></div>
+				<div class="col-md-1 offset-md-5">
+					<a class="btn btn-primary align-self-end"
+						href="<c:url value ='/mvc/employes/creer'/>">Ajouter un
+						employe</a>
 				</div>
 			</div>
 		</div>
@@ -59,33 +71,26 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<form:form method="POST" modelAttribute="newEmploye" >
-						<div class="form-group">
-							<form:label path="matricule">Matricule</form:label>
-							<form:input path="matricule" />
-						</div>
-						<div class="form-group">
-							<form:label path="entreprise.id">Entreprise</form:label>
-							<form:select path="entreprise.id">
-								<form:options items="${entreprises}" itemLabel="denomination" itemValue="id"/>
-							</form:select>
-						</div>
-						<div class="form-group">
-							<form:label path="profilRemuneration.id">Profil</form:label>
-							<form:select path="profilRemuneration.id">
-								<form:options items="${profilsRemuneration}" itemLabel="code" itemValue="id"/>
-							</form:select>
-							<div class="form-group">
-								<form:label path="grade.id">Grade</form:label>
-								<form:select path="grade.id">
-									<form:options items="${grades}" itemLabel="code" itemValue="id"/>
-								</form:select>
-							</div>
-							<input type="submit" value="Ajouter">
-					</form:form>
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Date/heure création</th>
+								<th>Matricule</th>
+								<th>Grade</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach items="${employes}" var="employe">
+								<tr>
+									<td>jj/MM/yy HH:SS</td>
+									<td>${employe.matricule}</td>
+									<td>${employe.grade.code}</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
 				</div>
 			</div>
 		</div>
 	</div>
 </body>
-</html>

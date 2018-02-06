@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
 @ComponentScan({"dev.paie.service", "dev.paie.util"})
-@ImportResource("classpath:jdd-config.xml")
+//@ImportResource("classpath:jdd-config.xml")
 @Import({DataSourceMySQLConfig.class, JpaConfig.class})
 @EnableJpaRepositories("dev.paie.repository")
 public class ServicesConfig {

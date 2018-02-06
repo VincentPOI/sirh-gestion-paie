@@ -24,6 +24,7 @@ public class RemunerationEmploye {
 	@ManyToOne
 	@JoinColumn(name="profilRemuneration_id")
 	private ProfilRemuneration profilRemuneration;
+
 	@ManyToOne
 	@JoinColumn(name="grade_id")
 	private Grade grade;

@@ -19,6 +19,14 @@ public class CalculerRemunerationServiceSimple implements CalculerRemunerationSe
 	@Autowired 
 	PaieUtils paieUtils;
 		
+	private BigDecimal salaireBase;
+	private BigDecimal salaireBrut;
+	private BigDecimal totalRetenueSalarial;
+	private BigDecimal totalCotisationsPatronal;
+	private BigDecimal netImposable;
+	private BigDecimal netAPayer;
+	
+	
 	@Override
 	public ResultatCalculRemuneration calculer(BulletinSalaire bulletin) {
 		
@@ -30,22 +38,22 @@ public class CalculerRemunerationServiceSimple implements CalculerRemunerationSe
 		List<Cotisation> cotisationsImposables = remunEmploy.getProfilRemuneration().getCotisationsImposables();
 		List<Cotisation> cotisationsNonImposables = remunEmploy.getProfilRemuneration().getCotisationsNonImposables();
 		
-		BigDecimal salaireBase = grade.getNbHeuresBase().multiply(grade.getTauxBase());
+		this.salaireBase = grade.getNbHeuresBase().multiply(grade.getTauxBase());
 		resultCalculRemun.setSalaireDeBase(paieUtils.formaterBigDecimal(salaireBase));
 		
-		BigDecimal salaireBrut = new BigDecimal(paieUtils.formaterBigDecimal(salaireBase.add(bulletin.getPrimeExceptionnelle())));
+		this.salaireBrut = new BigDecimal(paieUtils.formaterBigDecimal(salaireBase.add(bulletin.getPrimeExceptionnelle())));
 		resultCalculRemun.setSalaireBrut(paieUtils.formaterBigDecimal(salaireBrut));
 		
-		BigDecimal totalRetenueSalarial = calculRetenueSalariale(cotisationsNonImposables, salaireBrut);
+		this.totalRetenueSalarial = calculRetenueSalariale(cotisationsNonImposables, salaireBrut);
 		resultCalculRemun.setTotalRetenueSalarial(paieUtils.formaterBigDecimal(totalRetenueSalarial));
 		
-		BigDecimal totalCotisationsPatronal = calculCotisationPatronale(cotisationsNonImposables, salaireBrut);
+		this.totalCotisationsPatronal = calculCotisationPatronale(cotisationsNonImposables, salaireBrut);
 		resultCalculRemun.setTotalCotisationsPatronales(paieUtils.formaterBigDecimal(totalCotisationsPatronal));
 		
-		BigDecimal netImposable = salaireBrut.subtract(totalRetenueSalarial);
+		this.netImposable = salaireBrut.subtract(totalRetenueSalarial);
 		resultCalculRemun.setNetImposable(paieUtils.formaterBigDecimal(netImposable));
 		
-		BigDecimal netAPayer = new BigDecimal(paieUtils.formaterBigDecimal(netImposable.subtract((calculRetenueSalariale(cotisationsImposables, salaireBrut)))));
+		this.netAPayer = new BigDecimal(paieUtils.formaterBigDecimal(netImposable.subtract((calculRetenueSalariale(cotisationsImposables, salaireBrut)))));
 		resultCalculRemun.setNetAPayer(netAPayer.toString());
 		return resultCalculRemun;
 	}
@@ -66,6 +74,33 @@ public class CalculerRemunerationServiceSimple implements CalculerRemunerationSe
                 .reduce((a,b) -> a.add(b)).get();
 		return new BigDecimal(paieUtils.formaterBigDecimal(somme));
 	}
+
+
+	public BigDecimal getSalaireBase() {
+		return salaireBase;
+	}
+
+	public BigDecimal getSalaireBrut() {
+		return salaireBrut;
+	}
+
+	public BigDecimal getTotalRetenueSalarial() {
+		return totalRetenueSalarial;
+	}
+
+	public BigDecimal getTotalCotisationsPatronal() {
+		return totalCotisationsPatronal;
+	}
+
+	public BigDecimal getNetImposable() {
+		return netImposable;
+	}
+
+	public BigDecimal getNetAPayer() {
+		return netAPayer;
+	}
+	
+	
 
 
 }

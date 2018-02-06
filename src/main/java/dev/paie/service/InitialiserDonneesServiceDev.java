@@ -13,11 +13,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import dev.paie.entite.BulletinSalaire;
 import dev.paie.entite.Cotisation;
 import dev.paie.entite.Entreprise;
 import dev.paie.entite.Grade;
 import dev.paie.entite.Periode;
-import dev.paie.entite.ProfilRemuneration;;
+import dev.paie.entite.ProfilRemuneration;
+import dev.paie.entite.RemunerationEmploye;
+import dev.paie.repository.CotisationRepository;
+import dev.paie.repository.EntrepriseRepository;
+import dev.paie.repository.GradeRepository;
+import dev.paie.repository.PeriodeRepository;
+import dev.paie.repository.ProfilRemunerationRepository;;
 
 @Service
 @Transactional
@@ -29,12 +36,22 @@ public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
 	@Autowired
 	List<Grade> grades;
 	@Autowired
+	GradeRepository gr;
+	@Autowired
 	List<Entreprise> entreprises;
+	@Autowired
+	EntrepriseRepository er;
 	@Autowired
 	List<ProfilRemuneration> profilsRemuneration;
 	@Autowired
+	ProfilRemunerationRepository prr;
+	@Autowired
 	List<Cotisation> cotisations;
-
+	@Autowired
+	CotisationRepository cr;
+	@Autowired
+	PeriodeRepository pr;
+	
 	@Override
 	public void initialiser() {
 
@@ -49,13 +66,10 @@ public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
 			p.setDateFin(dateFin);
 			em.persist(p);
 		}
-
-		grades.stream().forEach(g -> em.persist(g));
-		cotisations.stream().forEach(c -> em.persist(c));
-		entreprises.stream().forEach(e -> em.persist(e));
-		profilsRemuneration.stream().forEach(p -> em.persist(p));
-		
-
+		gr.save(grades);
+		cr.save(cotisations);
+		er.save(entreprises);
+		prr.save(profilsRemuneration);
 	}
 
 }
