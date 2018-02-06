@@ -58,6 +58,7 @@ public class RemunerationEmployeController {
 	
 	@RequestMapping(method = RequestMethod.POST, path = "/creer")
 	public String insertEmploye(@ModelAttribute("newEmploye") RemunerationEmploye remun) {
+		remun.setTime();
 		rer.save(remun);
 		return "redirect:/mvc/employes/lister";
 	}

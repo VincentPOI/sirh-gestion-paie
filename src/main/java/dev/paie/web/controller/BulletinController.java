@@ -1,6 +1,5 @@
 package dev.paie.web.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -59,8 +58,8 @@ public class BulletinController {
 	
 	@RequestMapping(method = RequestMethod.POST, path = "/creer")
 	public String insertBulletin(@ModelAttribute("newBulletin") BulletinSalaire bull) {
+		bull.setTime();
 		bsr.save(bull);
-//		System.out.println(bsr.findOne(1).getPeriode().getDateDebut());
 		return "redirect:/mvc/bulletins/lister";
 	}
 	
@@ -95,5 +94,4 @@ public class BulletinController {
 		mv.setViewName("bulletins/visualiser");
 		return mv;
 	}
-	
 }

@@ -85,7 +85,7 @@
 						<tbody>
 							<c:forEach items="${bulletins}" var="bulletin" varStatus="status">
 								<tr>
-									<td>jj/MM/yy HH:SS</td>
+									<td>${bulletin.time}</td>
 									<td>${bulletin.periode.dateDebut} - ${bulletin.periode.dateFin}</td>
 									<td>${bulletin.remunerationEmploye.matricule}</td>
 									<td>${calculsBulletins[bulletin].salaireBrut}</td>

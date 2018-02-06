@@ -82,7 +82,7 @@
 						<tbody>
 							<c:forEach items="${employes}" var="employe">
 								<tr>
-									<td>jj/MM/yy HH:SS</td>
+									<td>${employe.time}</td>
 									<td>${employe.matricule}</td>
 									<td>${employe.grade.code}</td>
 								</tr>

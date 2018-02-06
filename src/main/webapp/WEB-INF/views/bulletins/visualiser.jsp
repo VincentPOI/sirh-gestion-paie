@@ -128,17 +128,6 @@
 					<td>${calculs.salaireBrut*cotisation.tauxPatronal}</td>
 				</tr>
 			</c:forEach>
-			<c:forEach var="cotisation"
-				items="${bulletin.remunerationEmploye.profilRemuneration.cotisationsImposables}">
-				<tr>
-					<td>${cotisation.code}/ ${cotisation.libelle}</td>
-					<td>${calculs.salaireBrut}</td>
-					<td>${cotisation.tauxSalarial}</td>
-					<td>${calculs.salaireBrut * cotisation.tauxSalarial}</td>
-					<td>${cotisation.tauxPatronal}</td>
-					<td>${calculs.salaireBrut*cotisation.tauxPatronal}</td>
-				</tr>
-			</c:forEach>
 
 
 			<tr>
@@ -155,7 +144,7 @@
 				<td></td>
 				<td>${calculs.totalRetenueSalarial}</td>
 				<td></td>
-				<td></td>
+				<td>${calculs.totalCotisationsPatronales}</td>
 			</tr>
 		</tbody>
 	</table>
@@ -173,14 +162,18 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr>
-				<td>Salaire de base</td>
-				<td>${bulletin.remunerationEmploye.grade.nbHeuresBase}</td>
-				<td>${calculs.totalRetenueSalarial}</td>
-				<td>${calculs.salaireDeBase}</td>
-				<td></td>
-				<td></td>
-			</tr>
+			<c:forEach var="cotisation"
+				items="${bulletin.remunerationEmploye.profilRemuneration.cotisationsImposables}">
+				<tr>
+					<td>${cotisation.code}/ ${cotisation.libelle}</td>
+					<td>${calculs.salaireBrut}</td>
+					<td>${cotisation.tauxSalarial}</td>
+					<td>${calculs.salaireBrut * cotisation.tauxSalarial}</td>
+					<td>${cotisation.tauxPatronal}</td>
+					<td>${calculs.salaireBrut*cotisation.tauxPatronal}</td>
+				</tr>
+			</c:forEach>
+
 
 		</tbody>
 	</table>
