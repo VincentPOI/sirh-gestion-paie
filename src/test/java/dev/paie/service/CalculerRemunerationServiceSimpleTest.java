@@ -10,12 +10,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import dev.paie.config.WebAppConfig;
+import dev.paie.config.TestConfig;
 import dev.paie.entite.BulletinSalaire;
 import dev.paie.entite.ResultatCalculRemuneration;
 
 @WebAppConfiguration
-@ContextConfiguration(classes = { WebAppConfig.class })
+@ContextConfiguration(classes = { TestConfig.class })
 @RunWith(SpringRunner.class)
 public class CalculerRemunerationServiceSimpleTest {
 
