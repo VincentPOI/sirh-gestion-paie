@@ -9,23 +9,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import dev.paie.config.ServicesConfig;
+import dev.paie.config.TestConfig;
 import dev.paie.entite.BulletinSalaire;
 import dev.paie.entite.ResultatCalculRemuneration;
 
 //Sélection des classes de configuration Spring à utiliser lors du test
-@ContextConfiguration(classes = { ServicesConfig.class })
+@ContextConfiguration(classes = { TestConfig.class })
 // Configuration JUnit pour que Spring prenne la main sur le cycle de vie du
 // test
 @RunWith(SpringRunner.class)
 public class CalculerRemunerationServiceSimpleTest {
-	
+
 	@Autowired
 	private CalculerRemunerationService remunerationService;
-	
+
 	@Autowired
 	BulletinSalaire bull;
-	
 
 	@Test
 	public void test_calculer() {

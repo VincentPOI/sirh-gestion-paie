@@ -2,6 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="s"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <html>
 
 <head>
@@ -55,18 +56,21 @@
 			</div>
 		</div>
 	</div>
+	<sec:authorize access="hasRole('ROLE_ADMINISTRATEUR')">
 	<div class="py-5">
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6"></div>
 				<div class="col-md-1 offset-md-5">
-					<a class="btn btn-primary align-self-end"
+				
+					<a class="btn btn-primary align-self-end" 
 						href="<c:url value ='/mvc/employes/creer'/>">Ajouter un
-						employe</a>
+						employe	</a>
 				</div>
 			</div>
 		</div>
 	</div>
+	</sec:authorize>
 	<div class="py-5">
 		<div class="container">
 			<div class="row">
@@ -91,6 +95,7 @@
 					</table>
 				</div>
 			</div>
+			
 		</div>
 	</div>
 </body>
