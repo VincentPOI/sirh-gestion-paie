@@ -13,7 +13,7 @@
 	<h1>Connexion</h1>
 	<!-- Spring Security s'attend aux paramètres "username" et "password" -->
 	<form method="post">
-		<input name="username"> <input name="password"> <input
+		<input name="username"> <input name="password" type="password"> <input
 			type="submit" value="Se connecter">
 		<sec:csrfInput />
 	</form>

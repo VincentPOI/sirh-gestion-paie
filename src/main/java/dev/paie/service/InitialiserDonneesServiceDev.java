@@ -4,16 +4,18 @@ import static java.time.temporal.TemporalAdjusters.firstDayOfMonth;
 import static java.time.temporal.TemporalAdjusters.lastDayOfMonth;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Collection;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import dev.paie.config.InitDataConfig;
 import dev.paie.entite.Cotisation;
 import dev.paie.entite.Entreprise;
 import dev.paie.entite.Grade;
@@ -33,27 +35,16 @@ public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
 
 	@PersistenceContext
 	private EntityManager em;
-
-	@Autowired
-	List<Grade> grades;
 	@Autowired
 	GradeRepository gr;
 	@Autowired
-	List<Entreprise> entreprises;
-	@Autowired
 	EntrepriseRepository er;
 	@Autowired
-	List<ProfilRemuneration> profilsRemuneration;
-	@Autowired
 	ProfilRemunerationRepository prr;
-	@Autowired
-	List<Cotisation> cotisations;
 	@Autowired
 	CotisationRepository cr;
 	@Autowired
 	PeriodeRepository pr;
-	@Autowired
-	List<Utilisateur> utilisateurs;
 	@Autowired
 	UtilisateurRepository ur;
 	@Autowired
@@ -63,27 +54,37 @@ public class InitialiserDonneesServiceDev implements InitialiserDonneesService {
 	@Transactional
 	public void initialiser() {
 
-		int nbmois = 12;
-		int annee = LocalDate.now().getYear();
-		for (int i = 1; i < nbmois; i++) {
-			Periode p = new Periode();
-			LocalDate dateDebut = LocalDate.of(annee, i, 13).with(firstDayOfMonth());
-			LocalDate dateFin = LocalDate.of(annee, i, 13).with(lastDayOfMonth());
-			p.setDateDebut(dateDebut);
-			p.setDateFin(dateFin);
-			em.persist(p);
-		}
+		try (AnnotationConfigApplicationContext dataContext = new AnnotationConfigApplicationContext(
+				InitDataConfig.class)) {
 
-		for (Utilisateur u : utilisateurs) {
-			String mdpHashe = this.passwordEncoder.encode(u.getMotDePasse());
-			u.setMotDePasse(mdpHashe);
-		}
+			Collection<Grade> grades = dataContext.getBeansOfType(Grade.class).values();
+			Collection<Entreprise> entreprises = dataContext.getBeansOfType(Entreprise.class).values();
+			Collection<ProfilRemuneration> profilsRemuneration = dataContext.getBeansOfType(ProfilRemuneration.class)
+					.values();
+			Collection<Cotisation> cotisations = dataContext.getBeansOfType(Cotisation.class).values();
+			Collection<Utilisateur> utilisateurs = dataContext.getBeansOfType(Utilisateur.class).values();
+			int nbmois = 12;
+			int annee = LocalDate.now().getYear();
+			for (int i = 1; i < nbmois; i++) {
+				Periode p = new Periode();
+				LocalDate dateDebut = LocalDate.of(annee, i, 13).with(firstDayOfMonth());
+				LocalDate dateFin = LocalDate.of(annee, i, 13).with(lastDayOfMonth());
+				p.setDateDebut(dateDebut);
+				p.setDateFin(dateFin);
+				em.persist(p);
+			}
 
-		gr.save(grades);
-		ur.save(utilisateurs);
-		cr.save(cotisations);
-		er.save(entreprises);
-		prr.save(profilsRemuneration);
+			for (Utilisateur u : utilisateurs) {
+				String mdpHashe = this.passwordEncoder.encode(u.getMotDePasse());
+				u.setMotDePasse(mdpHashe);
+			}
+
+			gr.save(grades);
+			ur.save(utilisateurs);
+			cr.save(cotisations);
+			er.save(entreprises);
+			prr.save(profilsRemuneration);
+		}
 
 	}
 

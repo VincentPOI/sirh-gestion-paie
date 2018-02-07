@@ -13,11 +13,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import dev.paie.config.WebAppConfig;
+import dev.paie.config.ServicesConfig;
 import dev.paie.entite.Grade;
 
 @WebAppConfiguration
-@ContextConfiguration(classes = { WebAppConfig.class })
+@ContextConfiguration(classes = { ServicesConfig.class })
 @RunWith(SpringRunner.class)
 public class GradeServiceJdbcTemplateTest {
 
