@@ -11,13 +11,13 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
-import dev.paie.config.TestConfig;
+import dev.paie.config.WebAppConfig;
 import dev.paie.entite.Avantage;
 
-@ContextConfiguration(classes = { TestConfig.class })
-// Configuration JUnit pour que Spring prenne la main sur le cycle de vie du
-// test
+@WebAppConfiguration
+@ContextConfiguration(classes = { WebAppConfig.class })
 @RunWith(SpringRunner.class)
 public class AvantageRepositoryTest {
 
@@ -32,6 +32,7 @@ public class AvantageRepositoryTest {
 		a.setNom("avantage1");
 		a.setMontant(new BigDecimal(12));
 
+		System.out.println(a.getCode());
 		avantageRepository.save(a);
 
 		List<Avantage> avantages = avantageRepository.findAll();

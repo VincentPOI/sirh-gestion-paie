@@ -11,14 +11,13 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
-import dev.paie.config.TestConfig;
+import dev.paie.config.WebAppConfig;
 import dev.paie.entite.Cotisation;
 
-//Sélection des classes de configuration Spring à utiliser lors du test
-@ContextConfiguration(classes = { TestConfig.class })
-// Configuration JUnit pour que Spring prenne la main sur le cycle de vie du
-// test
+@WebAppConfiguration
+@ContextConfiguration(classes = { WebAppConfig.class })
 @RunWith(SpringRunner.class)
 public class CotisationServiceJpaTest {
 
